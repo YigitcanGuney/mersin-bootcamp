@@ -32,26 +32,28 @@ const getUser = (e) => {
 
     let profileImg = document.querySelector("#profile-img");
 
-
+    // profil resim ve isimleri fetch fonksiyonu
     async function fetchProfile() {
         const response = await fetch(url);
         const profile = await response.json();
         return profile;
     }
 
+    // profil resim ve isimleri dom element eklenmesi
     fetchProfile().then(data => {
         contentName.innerHTML = data.name;
         profileImg.src = data.avatar_url;
         contentUserName.innerHTML = `@${data.login}`
     })
 
-
+    // repo bilgilerinin alındığın fetch fonskiyonu
     async function fetchReposCount() {
         const response = await fetch(repoUrl);
         const repos = await response.json();
         return repos;
     }
 
+    // repo bilgilerinin doma eklenmesi
     fetchReposCount().then(data => {
         repoCount.innerHTML = data.length;
 
@@ -59,6 +61,7 @@ const getUser = (e) => {
 
         data.map(item => {
 
+            // repolarda kullanılan yazılım dillerinin çekilmesi 
             fetch(item.languages_url).then(res => res.json())
                 .then(data => {
                     if (!(Object.keys(data).length === 0)) {
@@ -72,7 +75,7 @@ const getUser = (e) => {
                     uniqueKey = [...new Set(langKey)];
 
                     
-                   
+                  // yazılım dilleri ve boyunlarının toplam repoya oranlanıp doma eklenmesi 
                     for (let i = 0; i < uniqueKey.length; i++) {
                         for (let x =0;x < langValue.length; x++) {
 
